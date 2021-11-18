@@ -72,13 +72,13 @@ public class MsBuildConsoleParser extends LineTransformationOutputStream {
 
         if (mWarnings.find()) { // Match the number of warnings
             try {
-                numberOfWarnings = Integer.parseInt(mWarnings.group(0));
+                numberOfWarnings = Integer.parseInt(mWarnings.group(1));
             } catch (NumberFormatException e) {
 
             }
         } else if (mErrors.find()) { // Match the number of errors
             try {
-                numberOfErrors = Integer.parseInt(mErrors.group(0));
+                numberOfErrors = Integer.parseInt(mErrors.group(1));
             } catch (NumberFormatException e) {
 
             }
