@@ -64,23 +64,21 @@ public class MsBuildConsoleParser extends LineTransformationOutputStream {
         // trim off CR/LF from the end
         line = trimEOL(line);
 
-        Pattern patternWarnings = Pattern.compile(".*\\d+\\sWarning\\(s\\).*");
-        Pattern patternErrors = Pattern.compile(".*\\d+\\sError\\(s\\).*");
+        Pattern patternWarnings = Pattern.compile(".*(\\d+)\\sWarning\\(s\\).*");
+        Pattern patternErrors = Pattern.compile(".*(\\d+)\\sError\\(s\\).*");
 
         Matcher mWarnings = patternWarnings.matcher(line);
         Matcher mErrors = patternErrors.matcher(line);
 
-        if (mWarnings.matches()) { // Match the number of warnings
-            String[] part = line.split(" ");
+        if (mWarnings.find()) { // Match the number of warnings
             try {
-                numberOfWarnings = Integer.parseInt(part[4]);
+                numberOfWarnings = Integer.parseInt(mWarnings.group(0));
             } catch (NumberFormatException e) {
 
             }
-        } else if (mErrors.matches()) { // Match the number of errors
-            String[] part = line.split(" ");
+        } else if (mErrors.find()) { // Match the number of errors
             try {
-                numberOfErrors = Integer.parseInt(part[4]);
+                numberOfErrors = Integer.parseInt(mErrors.group(0));
             } catch (NumberFormatException e) {
 
             }
